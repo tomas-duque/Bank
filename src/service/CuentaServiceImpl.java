@@ -1,7 +1,9 @@
 package service;
 
+import domain.Cliente;
 import domain.Cuenta;
 import domain.enums.EstadoCuenta;
+import repository.ClienteRepository;
 import repository.CuentaRepository;
 import util.TypeValidator;
 
@@ -10,9 +12,12 @@ import java.util.List;
 public class CuentaServiceImpl implements CuentaService {
 
     private final CuentaRepository cuentaRepository;
+    private final ClienteRepository clienteRepository;
 
-    public CuentaServiceImpl(CuentaRepository cuentaRepository){
+    public CuentaServiceImpl(CuentaRepository cuentaRepository,
+                             ClienteRepository clienteRepository){
         this.cuentaRepository = cuentaRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     @Override
@@ -23,7 +28,18 @@ public class CuentaServiceImpl implements CuentaService {
         cuenta.setId(TypeValidator.validateInt("Ingrese el id de la cuenta"));
         cuenta.setSaldo(TypeValidator.validateDouble("Ingrese el saldo inicial"));
 
-        System.out.println("Seleccione el estado de la cuenta:");
+        int clienteId = TypeValidator.validateInt("Ingrese el ID del cliente");
+
+        Cliente cliente = clienteRepository.getClienteById(clienteId);
+
+        if(cliente == null){
+            System.out.println("Cliente no encontrado");
+            return null;
+        }
+
+        cuenta.setCliente(cliente);
+
+        System.out.println("Seleccione el estado:");
         System.out.println("1. ACTIVA");
         System.out.println("2. INACTIVA");
 
@@ -36,9 +52,6 @@ public class CuentaServiceImpl implements CuentaService {
             case 2:
                 cuenta.setEstado(EstadoCuenta.INACTIVA);
                 break;
-            default:
-                System.out.println("Opción inválida, se asigna ACTIVA por defecto");
-                cuenta.setEstado(EstadoCuenta.ACTIVA);
         }
 
         return cuentaRepository.createCuentaRepository(cuenta);

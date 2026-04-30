@@ -5,18 +5,11 @@ import domain.enums.TipoMovimiento;
 public class Transaccion {
 
     private int id;
-    private Cuenta cuenta;
+    private int cuentaId;
     private double monto;
     private TipoMovimiento tipoMovimiento;
 
     public Transaccion(){}
-
-    public Transaccion(int id, Cuenta cuenta, double monto, TipoMovimiento tipoMovimiento) {
-        this.id = id;
-        this.cuenta = cuenta;
-        this.monto = monto;
-        this.tipoMovimiento = tipoMovimiento;
-    }
 
     public int getId() {
         return id;
@@ -26,12 +19,12 @@ public class Transaccion {
         this.id = id;
     }
 
-    public Cuenta getCuenta() {
-        return cuenta;
+    public int getCuentaId() {
+        return cuentaId;
     }
 
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public void setCuentaId(int cuentaId) {
+        this.cuentaId = cuentaId;
     }
 
     public double getMonto() {
@@ -50,5 +43,3 @@ public class Transaccion {
         this.tipoMovimiento = tipoMovimiento;
     }
 }
-
-

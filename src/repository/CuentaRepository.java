@@ -37,8 +37,14 @@ public class CuentaRepository {
     public List<Cuenta> getAllCuentas(){
 
         for (Cuenta c : cuentas){
+
+            String nombreCliente = (c.getCliente() != null)
+                    ? c.getCliente().getNombre()
+                    : "Sin cliente";
+
             System.out.println(
                     "ID: " + c.getId() +
+                            " Cliente: " + nombreCliente +
                             " Saldo: " + c.getSaldo() +
                             " Estado: " + c.getEstado()
             );
